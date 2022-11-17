@@ -1,0 +1,35 @@
+@media (min-width: 1200px) {
+  .leftSideBarPosition {
+    position: fixed;
+    width: 15%;
+  }
+}
+
+@media (min-width: 991px) {
+  .graphLabelTabs {
+    float: right;
+  }
+
+  .menuBtn {
+    float: right;
+  }
+}
+
+@media (max-width: 992px) {
+  .tableColLow24H {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .tableColHigh24H {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .tableCol24H {
+    display: none;
+  }
+}
+
