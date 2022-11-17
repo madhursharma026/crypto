@@ -47,13 +47,31 @@ export default function Home() {
     }, []);
   }
 
+  function updatingPrice() {
+    fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd`)
+      .then(response => response.json())
+      .then(response => {
+        setLoading(true)
+        setAllData(response);
+      })
+      .catch(err => console.error(err));
+  }
+
+
+  React.useEffect(() => {
+    const updatingData = setInterval(() => {
+      updatingPrice()
+    }, 2000);
+    return () => clearInterval(updatingData);
+  },
+    []);
+
+
   {
     React.useEffect(() => {
-      setLoading(false)
       fetch(`http://127.0.0.1:5000/add-coin`)
         .then(response => response.json())
         .then(response => {
-          setLoading(true)
           setTotalPrice(response);
         })
         .catch(err => console.error(err));
