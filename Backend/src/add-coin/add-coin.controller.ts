@@ -9,7 +9,7 @@ export class AddCoinController {
 
   @Post()
   async addCoin(@Body() body: CreateAddCoinDto) {
-      const addNewCoin = await this.addCoinService.create(body.coinName, body.coinPrice, body.coinQty);
+      const addNewCoin = await this.addCoinService.create(body.coinId, body.coinName, body.coinPrice, body.coinQty);
       return addNewCoin;
   }
 

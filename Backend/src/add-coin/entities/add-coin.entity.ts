@@ -6,6 +6,9 @@ export class AddCoin {
     id: number;
 
     @Column()
+    coinId: string;
+
+    @Column({unique: true})
     coinName: string;
 
     @Column()

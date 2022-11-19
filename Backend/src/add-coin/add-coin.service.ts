@@ -7,16 +7,28 @@ import { AddCoin } from './entities/add-coin.entity';
 export class AddCoinService {
   constructor(@InjectRepository(AddCoin) private repo: Repository<AddCoin>) { }
 
-  create(coinName, coinPrice, coinQty) {
-    const addNewCoin = this.repo.create({ coinName, coinPrice, coinQty });
-    addNewCoin.totalPrice = coinPrice * coinQty
+  async create(gettingCoinId, gettingCoinName, gettingCoinPrice, gettingcoinQty) {
+    const user = await this.repo.findOne({where: {coinName: gettingCoinName}});
+    if (user) {
+      let coinName = gettingCoinName
+      let coinPrice = gettingCoinPrice
+      let coinId = gettingCoinId
+      let coinQty = (Number(user.coinQty) + Number(gettingcoinQty))
+      Object.assign(user, { coinName, coinPrice, coinQty, coinId });
+      user.totalPrice = (Number(user.totalPrice) + (Number(gettingCoinPrice) * Number(gettingcoinQty)))
+      return this.repo.save(user);
+    }
+    let coinName = gettingCoinName
+    let coinPrice = gettingCoinPrice
+    let coinQty = gettingcoinQty
+    let coinId = gettingCoinId
+    const addNewCoin = this.repo.create({ coinId, coinName, coinPrice, coinQty });
+    addNewCoin.totalPrice = gettingCoinPrice * gettingcoinQty
     return this.repo.save(addNewCoin);
   }
 
   findAll(): Promise<AddCoin[]> {
-    return this.repo.find(
-      { select: ['totalPrice'] }
-    );
+    return this.repo.find();
   }
 
   // findOne(id: number) {
