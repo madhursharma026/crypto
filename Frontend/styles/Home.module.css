@@ -27,9 +27,3 @@
   }
 }
 
-@media (max-width: 576px) {
-  .tableCol24H {
-    display: none;
-  }
-}
-
